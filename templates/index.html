@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Neuro-Symbolic Monkeys Project</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        .chat-box {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .drop-zone {
+            border: 3px dashed #6c757d;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .drop-zone:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+        .project-description {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .title {
+            color: #2c3e50;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .team-members {
+            font-style: italic;
+            color: #34495e;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <h1 class="title">Neuro-Symbolic Monkeys Project</h1>
+        
+        <div class="project-description">
+            <p>The "Neuro-Symbolic Monkeys" project integrates large language models (LLMs), computer vision (CV) models, and a STRIPS-based planner to solve planning-related questions involving a monkey navigating a room to obtain bananas. The system processes user-inputted images and questions to extract object information and generate detailed, step-by-step natural language plans.</p>
+            
+            <p class="team-members">Developed by: Sophia Huang (Brown University), Ramona Bergeron (Boston University), Ivi Fung (Tufts University), Sally Lee (Olin College of Engineering), and Irene Deng (Boston University)</p>
+            
+            <p>Supported by AI Studio TA Andrii Zahorodnii and Challenge Advisors Lee Martie and Sandra Hawkins</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="drop-zone" id="dropZone">
+                    <h4>Upload Your Image</h4>
+                    <p class="text-muted">Drag and drop an image here or click to select</p>
+                    <input type="file" id="fileInput" hidden accept="image/*">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="chat-box" id="chatBox">
+                    <div class="text-muted">Processing results will appear here...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const chatBox = document.getElementById('chatBox');
+
+        dropZone.addEventListener('click', () => fileInput.click());
+        
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.style.backgroundColor = 'rgba(255, 255, 255, 1)';
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+            const file = e.dataTransfer.files[0];
+            processFile(file);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            processFile(file);
+        });
+
+        function processFile(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            chatBox.innerHTML = '<div class="text-center"><div class="spinner-border text-primary" role="status"></div><div class="mt-2">Processing image...</div></div>';
+
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                chatBox.innerHTML = '';
+                if (data.error) {
+                    chatBox.innerHTML = `<div class="alert alert-danger">${data.error}</div>`;
+                } else {
+                    data.messages.forEach(msg => {
+                        chatBox.innerHTML += `<div class="alert alert-success mb-2">${msg.message}</div>`;
+                    });
+                }
+            })
+            .catch(error => {
+                chatBox.innerHTML = `<div class="alert alert-danger">Error: ${error}</div>`;
+            });
+        }
+    </script>
+</body>
+</html>
