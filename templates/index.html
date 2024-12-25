@@ -58,7 +58,7 @@
         <div class="project-description">
             <p>The "Neuro-Symbolic Monkeys" project integrates large language models (LLMs), computer vision (CV) models, and a STRIPS-based planner to solve planning-related questions involving a monkey navigating a room to obtain bananas. The system processes user-inputted images and questions to extract object information and generate detailed, step-by-step natural language plans.</p>
             
-            <p class="team-members">Developed by: Sophia Huang (Brown University), Ramona Bergeron (Boston University), Ivi Fung (Tufts University), Sally Lee (Olin College of Engineering), and Irene Deng (Boston University)</p>
+            <p class="team-members">Developed by: Sophia Huang (Brown University), Irene Deng (Boston University), Ivi Fung (Tufts University), Sally Lee (Olin College of Engineering), and Ramona Bergeron (Boston University)</p>
             
             <p>Supported by AI Studio TA Andrii Zahorodnii and Challenge Advisors Lee Martie and Sandra Hawkins</p>
         </div>
@@ -124,7 +124,11 @@
                     chatBox.innerHTML = `<div class="alert alert-danger">${data.error}</div>`;
                 } else {
                     data.messages.forEach(msg => {
-                        chatBox.innerHTML += `<div class="alert alert-success mb-2">${msg.message}</div>`;
+                        if (msg.type === 'processing') {
+                            chatBox.innerHTML += `<div class="alert alert-secondary mb-2">${msg.message}</div>`;
+                        } else {
+                            chatBox.innerHTML += `<div class="alert alert-success mb-2">${msg.message}</div>`;
+                        }
                     });
                 }
             })
