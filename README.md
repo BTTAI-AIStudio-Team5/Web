@@ -1,6 +1,6 @@
 # Neuro-Symbolic Monkeys Project
 
-A user-friendly web application that leverages a neuro-symbolic approach, combining Computer Vision (CV), Logical Planning (STRIPS), and Large Language Models (LLMs) to solve multimodal planning tasks. The system processes user-inputted images and questions to generate reliable, provably-correct plans for a monkey navigating rooms to obtain bananas. By integrating neural components (CV, LLMs) with symbolic reasoning (STRIPS planner), the project achieves both flexibility in understanding natural language/images and guaranteed correctness in the generated action sequences.
+A user-friendly web application that leverages a neuro-symbolic approach, combining Computer Vision (CV), Automated Planning (STRIPS), and Large Language Models (LLMs) to solve multimodal planning tasks. The system processes user-inputted images and questions to generate reliable, provably-correct plans for a monkey navigating rooms to obtain bananas. By integrating neural components (CV, LLMs) with symbolic reasoning (STRIPS planner), the project achieves both flexibility in understanding natural language/images and guaranteed correctness in the generated action sequences.
 
 ![Screenshot of the UI](readme_screenshot.png)
 
@@ -60,13 +60,13 @@ python web-interface.py
 Open your browser and navigate to `http://127.0.0.1:5000` to use the interface.
 
 ## Project Structure
-- `CV/`: Computer vision models and image processing
+- `cv/`: Computer vision models and image processing
   - `cvmodel.py`: CNN model architecture and training
   - `split_roi.py`: ROI detection and object boundary analysis
-- `LLM/`: Large Language Model integration
+- `llm/`: Large Language Model integration
   - `llm_openai.py`: OpenAI GPT-4 interface
   - `llm_gpt4all.py`: Local GPT4All interface
-- `STRIPS_planner/`: Planning system
+- `strips-planner/`: Planning system
   - `strips.py`: Core STRIPS implementation
 - `templates/`: Static web assets
 - `templates/`: Flask HTML templates
