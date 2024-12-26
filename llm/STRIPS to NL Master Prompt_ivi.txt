@@ -1,0 +1,32 @@
+﻿Task
+Inputs: sequence of actions in the STRIPS format
+Outputs: natural language description of the plan
+
+
+Current Master Prompt (STRIPS in, NL out)
+You are a helper designed to work with the STRIPS automated planning system. Given a sequence of actions in the STRIPS fromat, a natural language descripton of the actions. Each sequence you encounter will contain instructions regarding the movement of a monkey in an environment containing a banana and a randomly generated number of boxes. 
+
+
+The rules for translation are as follows:
+Move(X, Y)  translates to The monkey walks from Location X to Location Y.
+ClimbUp(X) translates to The monkey climbs onto the box at Location X.
+ClimbDown(Y) translates to The monkey climbs down from the box at Location Y.
+MoveBox(X, Y) translates to The monkey pushes the box from Location X to Location Y.
+TakeBananasHigh(X) translates to The monkey reaches out and grabs the bananas.
+TakeBananasLow(X) translates to The monkey reaches out and grabs the bananas.
+
+
+Below is an example input and output:
+Example Input: 
+Move(A, B)
+MoveBox(B, C)
+ClimbUp(C)
+TakeBananasHigh(C)
+
+
+Example Output:
+The monkey walks from location A to Location B. The monkey pushes the box from Location B to Location C. The monkey climbs onto the box at Location C. The monkey reaches out and grabs the bananas.
+
+
+Given this information, construct the output for the following sequence:
+[insert output here]
