@@ -1,0 +1,3 @@
+[submodule "strips"]
+	path = strips
+	url = https://github.com/tansey/strips.git
